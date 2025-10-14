@@ -19,29 +19,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Build project
       - name: Build
-        env:
-          # Replace REPO_NAME with your repository name
-          BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
 
-      # Step 5: Upload artifact for deployment
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -54,7 +46,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
